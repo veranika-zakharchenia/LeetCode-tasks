@@ -1,36 +1,21 @@
-from typing import List
-
-
-class Solution:
-    def isCommonPrefix(self, strs: List[str], length: int):
-        str1 = strs[0][0: length]
-        i = 1
-        while i < len(strs):
-            if strs[i].startswith(str1) is False:
-                return False
-            i += 1
-        return True
-
-    def longestCommonPrefix(self, strs: List[str]) -> str:
-        if len(strs) == 0:
-            return ""
-        min_len = 1000
-        for str in strs:
-            min_len = min(min_len, len(str))
-
-        low = 1
-        high = min_len
-
-        while low <= high and low <= min_len:
-            middle = int((low + high) / 2)
-            if self.isCommonPrefix(strs, middle):
-                low = middle + 1
+def longest_common_prefix(input_array):
+    M = min(map(len, input_array))
+    common_index = 0
+    char_index = 0
+    for char in input_array[0][:M]:       # O(M) - length of the shortest string
+        for elem in input_array[1:]:      # O(N) - length of the input array
+            if elem[char_index] == char:  # O(1)
+                common_index += 1
             else:
-                high = middle - 1
+                return input_array[0][:common_index]
+        char_index += 1
 
-        return strs[0][0:int((low + high) / 2)]
+    return input_array[0][:common_index]
 
 
 if __name__ == '__main__':
-    solution = Solution()
-    print(solution.longestCommonPrefix(["cir","car"]))
+    assert (longest_common_prefix(["cir", "car"]) == "c")
+    assert (longest_common_prefix(["bar", "car"]) == "")
+    assert (longest_common_prefix(["", "abc"]) == "")
+    assert (longest_common_prefix(["aaab", "aaacd"]) == "aaa")
+    print("Success!")
