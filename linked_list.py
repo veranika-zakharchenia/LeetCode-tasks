@@ -42,7 +42,6 @@ class SinglyLinkedList:
         while(current):
             result.append(current.data)
             current = current.next
-        # print(result)
         delimiter = ' '
         print(delimiter.join((map(str, result))))
 #     # Write your code here
